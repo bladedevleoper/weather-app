@@ -1,0 +1,53 @@
+In Javascript programming there are two types of events:
+
+User Event
+1. An example of a user event is a mouse click, with addEventListener:
+
+button.addEventListener('click', () => {
+
+    alert('You clicked me');
+});
+
+
+
+
+System Event
+
+1. An example of a System Event is with a setTimeOut
+
+setTimeout(() => {
+
+    alert("Timer finished!");
+
+}, 10000);
+
+
+Another is the onreadystatechange in an ajax request:
+
+httpRequest.onreadystatechange = () => {
+    switch (httpRequest.readyState) {
+
+        case XMLHttpRequest.DONE:
+            console.log('Finished);
+            break;
+
+    }
+}
+
+
+//System Events in Node.js
+
+1. Data Events - reading data from a url or file
+2. Completion Events - when an action is completed
+3. Error Events - various handling events .
+
+
+
+//Error handling
+
+- we can have errors in our code
+- things can go wrong externaly such as servers responding differently as you would expect
+- or even the user who is using the application may put in the wrong input.
+
+//in Node.js the asyncronous provides us with an error listener.
+
