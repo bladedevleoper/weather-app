@@ -19,18 +19,65 @@ api.openweathermap.org/data/2.5/forecast?id=524901&APPID=1111111111
 
 //https module
 const https = require('http');
+const api = require('./api.json');
+
+
 const id = 524901; //id for moscow
-try {
-    const request = https.get(`http://api.openweathermap.org/data/2.5/forecast?id=${id}&APPID=bb389a65d529168be0bd8385fa475f3a`, (response) => {
 
 
-        response.on('data', (data) => {
-            console.dir(data.toString());
-        });
+//print out temp details
+//print out error messages
 
+function printWeather(weather) {
+     const message = `Current tempreture in ${weather.name} is ${weather.main.temp}F`;
 
-    });
-} catch (e) {
-
-    console.error(e.message);
+     console.log(message);
 }
+
+function get(query){
+
+    try {
+        const request = https.get(`http://api.openweathermap.org/data/2.5/forecast?id=${id}&APPID=${api.key}`, (response) => {
+
+            if (response.statusCode == 200) {
+                
+                let body = '';
+                //let status = '';
+                response.on('data', (chunk) => {
+                    //console.dir(data.toString());
+
+                    body += chunk;
+                    //status = chunk.cod;
+                    //console.log(status);
+                });
+        
+        
+                response.on('end', () => {
+                    //console.log(body);
+                    
+                    //parse data
+                    const weather = body; //JSON.parse(body);
+                    //print the data
+                    //console.log(weather);
+                   printWeather(weather);
+
+                });
+
+            } else {
+                console.error(response.error);
+            }
+
+        
+        });
+    } catch (e) {
+    
+        console.error(e.message);
+    }
+
+
+}
+
+
+module.exports.get = get;
+
+//TODO Handle any errors 
